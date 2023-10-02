@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import api from './api'
+import { useNavigate } from 'react-router-dom';
+
+
 
 function Login() {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({ email: '', password: '' });
 
     const handleChange = (e) => {
@@ -9,15 +13,19 @@ function Login() {
     };
 
     const handleSubmit = (e) => {
+
         e.preventDefault();
         api.post('/auth/login', formData)
             .then((response) => {
-                console.log(response.data);
-                
+                console.log(response.data.authToken);
+                localStorage.setItem('token', response.data.authToken);
+                navigate('/main')
+
+
             })
             .catch((error) => {
                 console.error(error);
-                
+
             });
     };
 
