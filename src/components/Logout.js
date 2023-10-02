@@ -1,12 +1,12 @@
 import React from 'react';
+import { Navigate } from 'react-router-dom';
 
 const Logout = ({ onLogout }) => {
 
     const handleLogout = () => {
 
         localStorage.removeItem('token');
-
-
+        localStorage.removeItem('id');
         onLogout();
     };
 
