@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import api from '../components/api';
+import { useNavigate } from 'react-router-dom';
+
 
 function UserUpdateForm() {
+    const navigate = useNavigate()
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -11,6 +14,30 @@ function UserUpdateForm() {
         postalCode: '',
         country: '',
     });
+
+    useEffect(() => {
+        
+        const id = localStorage.getItem('id');
+        api
+            .get(`/user/profile/${id}`)
+            .then((response) => {
+                const userData = response.data;
+
+                
+                setFormData({
+                    name: userData.name,
+                    email: userData.email,
+                    street: userData.address.street,
+                    city: userData.address.city,
+                    state: userData.address.state,
+                    postalCode: userData.address.postalCode,
+                    country: userData.address.country,
+                });
+            })
+            .catch((error) => {
+                console.error('Error fetching user data:', error);
+            });
+    }, []); 
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -35,10 +62,11 @@ function UserUpdateForm() {
         };
 
         api
-            .put(`/user/profile/${id}`, updatedData) // Make sure to use the correct URL with userId
+            .put(`/user/profile/${id}`, updatedData) 
             .then((response) => {
                 
                 console.log('User updated:', response.data);
+                navigate('/profile/:')
                 
             })
             .catch((error) => {

@@ -11,6 +11,8 @@ import UserProfile from './pages/UserProfile';
 import api from "./components/api"
 import UserUpdateForm from './components/UserUpdate';
 import UserDelete from './components/UserDelete';
+import ProductCreate from './components/ProductCreate';
+import ProductList from './pages/ProductList';
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -65,7 +67,8 @@ function App() {
         <Route path="/main" element={<PrivateRoute><MainPage authenticated={authenticated} /></PrivateRoute>} />
         <Route path="/profile/:id" element={<UserProfile />} />
         <Route path="/logout" element={<Logout onLogout={handleLogout} />} />
-
+        <Route path="/products/all" element={<ProductList />} />
+        <Route path="/products/create" element={<ProductCreate />} /> 
       </Routes>
     </div>
   );

@@ -51,7 +51,11 @@ useEffect(() => {
                 <div>
                     <p>Name: {user.name}</p>
                     <p>Email: {user.email}</p>
+                    <p>Street: {user.address.street}</p>
                     <p>City: {user.address.city}</p>
+                    <p>State: {user.address.state}</p>
+                    <p>Postal Code: {user.address.postalCode}</p>
+                    <p>Country: {user.address.country}</p>
                         <Link to="/user/update">Update Profile</Link>
                         <Link to="/user/delete">Delete Profile</Link>
                 </div>
