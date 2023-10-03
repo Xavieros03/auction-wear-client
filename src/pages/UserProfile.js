@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import api from "../components/api"
+import { Link } from 'react-router-dom'
 
 
 
@@ -50,6 +51,9 @@ useEffect(() => {
                 <div>
                     <p>Name: {user.name}</p>
                     <p>Email: {user.email}</p>
+                    <p>City: {user.address.city}</p>
+                        <Link to="/user/update">Update Profile</Link>
+                        <Link to="/user/delete">Delete Profile</Link>
                 </div>
             ) : (
                 <p>Unable to fetch user information.</p>

@@ -9,6 +9,8 @@ import Logout from './components/Logout';
 import Navbar from './components/Navbar';
 import UserProfile from './pages/UserProfile';
 import api from "./components/api"
+import UserUpdateForm from './components/UserUpdate';
+import UserDelete from './components/UserDelete';
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -58,7 +60,8 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
-
+        <Route path="/user/update" element={<UserUpdateForm />} />
+        <Route path="/user/delete" element={<UserDelete />} />
         <Route path="/main" element={<PrivateRoute><MainPage authenticated={authenticated} /></PrivateRoute>} />
         <Route path="/profile/:id" element={<UserProfile />} />
         <Route path="/logout" element={<Logout onLogout={handleLogout} />} />
