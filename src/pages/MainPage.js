@@ -15,7 +15,10 @@ function MainPage() {
         <div>
             <h2>Welcome to the Main Page</h2>
             {authenticated ? (
+                <>
                 <p>This is the main page content for authenticated users.</p>
+                    <a href="/products/all">Products</a>
+                </>
             ) : (
                 <p>You need to log in to access this content.</p>
             )}

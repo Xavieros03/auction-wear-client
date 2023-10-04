@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../components/api';
+import { Link } from 'react-router-dom';
+
 
 function ProductList() {
     const [products, setProducts] = useState([]);
@@ -7,6 +9,11 @@ function ProductList() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
+        const userToken = localStorage.getItem('token');
+
+        if (userToken) {
+           
+            api.defaults.headers.common['Authorization'] = `Bearer ${userToken}`
         
         api
             .get('/products/all')
@@ -19,11 +26,13 @@ function ProductList() {
                 setError(err);
                 setLoading(false);
             });
+        }
     }, []);
 
     return (
         <div>
             <h2>Product List</h2>
+            <button><a href="/products/create">Create Product</a></button>
             {loading ? (
                 <p>Loading products...</p>
             ) : error ? (
@@ -35,7 +44,9 @@ function ProductList() {
                             <h3>{product.name}</h3>
                             <p>Description: {product.description}</p>
                             <p>Brand: {product.brand}</p>
-                            
+                            <Link to={`/products/update/${product._id}`}>Update</Link>
+                            <br />
+                            <Link to={`/products/delete/${product._id}`}>Delete</Link>
                         </li>
                     ))}
                 </ul>

@@ -13,6 +13,8 @@ import UserUpdateForm from './components/UserUpdate';
 import UserDelete from './components/UserDelete';
 import ProductCreate from './components/ProductCreate';
 import ProductList from './pages/ProductList';
+import ProductUpdate from "./components/ProductUpdate"
+import ProductDelete from "./components/ProductDelete"
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -69,6 +71,8 @@ function App() {
         <Route path="/logout" element={<Logout onLogout={handleLogout} />} />
         <Route path="/products/all" element={<ProductList />} />
         <Route path="/products/create" element={<ProductCreate />} /> 
+        <Route path="/products/update/:productId" element={<ProductUpdate />} /> 
+        <Route path="/products/delete/:productId" element={<ProductDelete />} />
       </Routes>
     </div>
   );

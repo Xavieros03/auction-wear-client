@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom'; 
 import api from '../components/api';
 import { useNavigate } from 'react-router-dom';
 
-function ProductCreate() {
-    const navigate = useNavigate()
+function ProductUpdate() {
+    const navigate = useNavigate();
+    const { productId } = useParams(); 
+
     const [formData, setFormData] = useState({
         name: '',
         description: '',
@@ -11,12 +14,17 @@ function ProductCreate() {
         brand: '',
     });
 
-    const [user, setUser] = useState(null);
-
     useEffect(() => {
-        const userId = localStorage.getItem('id');
-        setUser(userId);
-    }, []);
+      
+        api.get(`/products/${productId}`)
+            .then((response) => {
+                setFormData(response.data); 
+                console.log(response.data)
+            })
+            .catch((error) => {
+                console.error('Error fetching product:', error);
+            });
+    }, [productId]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -25,26 +33,23 @@ function ProductCreate() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-       
-        formData.owner = user;
-
-        
+      
         api
-            .post('/products/create', formData)
+            .put(`/products/update/${productId}`, formData)
             .then((response) => {
+                console.log('Product updated:', response.data);
                 navigate("/products/all")
-                console.log('Product created:', response.data);
-               
+                
             })
             .catch((error) => {
-                console.error('Error creating product:', error);
-                
+                console.error('Error updating product:', error);
+              
             });
     };
 
     return (
         <div>
-            <h2>Create a New Product</h2>
+            <h2>Update Product</h2>
             <form onSubmit={handleSubmit}>
                 <label>
                     Name:
@@ -62,10 +67,10 @@ function ProductCreate() {
                     Brand:
                     <input type="text" name="brand" value={formData.brand} onChange={handleChange} />
                 </label>
-                <button type="submit">Create Product</button>
+                <button type="submit">Update Product</button>
             </form>
         </div>
     );
 }
 
-export default ProductCreate;
+export default ProductUpdate;
