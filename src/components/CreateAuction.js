@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import api from '../components/api';
+import io from 'socket.io-client'; 
 
-function MainPage() {
+function CreateAuction() {
     const [authenticated, setAuthenticated] = useState(false);
     const [userProducts, setUserProducts] = useState([]);
     const [productId, setProductId] = useState('');
@@ -25,23 +26,27 @@ function MainPage() {
     }, []);
 
     const handleCreateAuction = () => {
-        const userId = localStorage.getItem('id'); 
-
+        const userId = localStorage.getItem('id');
 
         api
             .post('/auctions/create', {
                 productId,
                 sellerId: userId,
-                startingBid: parseFloat(startingBid), 
+                startingBid: parseFloat(startingBid),
                 scheduledStartTime: new Date(scheduledStartTime),
                 userId,
             })
             .then((response) => {
-                
                 console.log('Auction created:', response.data);
+
+                
+                const socket = io.connect('http://localhost:5005'); 
+                socket.emit('auctionCreatedOrUpdated', response.data);
+
+
+                socket.disconnect();
             })
             .catch((error) => {
-                
                 console.error('Error creating auction:', error);
             });
     };
@@ -94,4 +99,4 @@ function MainPage() {
     );
 }
 
-export default MainPage;
+export default CreateAuction;

@@ -18,6 +18,7 @@ import ProductDelete from "./components/ProductDelete"
 import CreateAuction from './components/CreateAuction';
 import AuctionList from './components/AuctionList';
 
+
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
   const navigate = useNavigate();
