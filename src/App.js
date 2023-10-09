@@ -15,6 +15,8 @@ import ProductCreate from './components/ProductCreate';
 import ProductList from './pages/ProductList';
 import ProductUpdate from "./components/ProductUpdate"
 import ProductDelete from "./components/ProductDelete"
+import CreateAuction from './components/CreateAuction';
+import AuctionList from './components/AuctionList';
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -73,6 +75,8 @@ function App() {
         <Route path="/products/create" element={<ProductCreate />} /> 
         <Route path="/products/update/:productId" element={<ProductUpdate />} /> 
         <Route path="/products/delete/:productId" element={<ProductDelete />} />
+        <Route path="/auctions/main" elementt={<AuctionList></AuctionList>} />
+        <Route path="/auctions/create" element={<CreateAuction></CreateAuction>} />
       </Routes>
     </div>
   );
