@@ -17,6 +17,7 @@ import ProductUpdate from "./components/ProductUpdate"
 import ProductDelete from "./components/ProductDelete"
 import CreateAuction from './components/CreateAuction';
 import AuctionList from './components/AuctionList';
+import AuctionDetails from "./components/AuctionDetails"
 
 
 function App() {
@@ -78,6 +79,8 @@ function App() {
         <Route path="/products/delete/:productId" element={<ProductDelete />} />
         <Route path="/auctions/main" elementt={<AuctionList></AuctionList>} />
         <Route path="/auctions/create" element={<CreateAuction></CreateAuction>} />
+        <Route path="/auctions/join/:id" element={<AuctionDetails></AuctionDetails>} />
+        <Route path="/auctions/:id" element={<AuctionDetails></AuctionDetails>} />
       </Routes>
     </div>
   );
