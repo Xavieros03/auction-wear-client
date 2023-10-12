@@ -81,6 +81,7 @@ function App() {
         <Route path="/auctions/create" element={<CreateAuction></CreateAuction>} />
         <Route path="/auctions/join/:id" element={<AuctionDetails></AuctionDetails>} />
         <Route path="/auctions/:id" element={<AuctionDetails></AuctionDetails>} />
+        <Route path="/auctions/bid/:id" element={<AuctionDetails></AuctionDetails>} />
       </Routes>
     </div>
   );
