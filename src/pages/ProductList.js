@@ -42,6 +42,7 @@ function ProductList() {
                     {products.map((product) => (
                         <li key={product._id}>
                             <h3>{product.name}</h3>
+                            <img src={product.image} alt="" />
                             <p>Description: {product.description}</p>
                             <p>Brand: {product.brand}</p>
                             <Link to={`/products/update/${product._id}`}>Update</Link>

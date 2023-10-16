@@ -10,7 +10,6 @@ function ProductUpdate() {
     const [formData, setFormData] = useState({
         name: '',
         description: '',
-        photo: '',
         brand: '',
     });
 
@@ -58,10 +57,6 @@ function ProductUpdate() {
                 <label>
                     Description:
                     <textarea name="description" value={formData.description} onChange={handleChange} />
-                </label>
-                <label>
-                    Photo URL:
-                    <input type="text" name="photo" value={formData.photo} onChange={handleChange} />
                 </label>
                 <label>
                     Brand:

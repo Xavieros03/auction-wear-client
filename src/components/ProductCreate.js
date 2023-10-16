@@ -7,11 +7,29 @@ function ProductCreate() {
     const [formData, setFormData] = useState({
         name: '',
         description: '',
-        photo: '',
         brand: '',
     });
+    const [image, setImage] = useState("")
 
     const [user, setUser] = useState(null);
+
+    const handleFileUpload = (e) => {
+        // console.log("The file to be uploaded is: ", e.target.files[0]);
+
+        const uploadData = new FormData();
+
+        // imageUrl => this name has to be the same as in the model since we pass
+        // req.body to .create() method when creating a new movie in '/api/movies' POST route
+        uploadData.append("image", e.target.files[0]);
+
+        api.post('/products/upload', uploadData)
+            .then(response => {
+                // console.log("response is: ", response);
+                // response carries "fileUrl" which we can use to update the state
+                setImage(response.data.fileUrl);
+            })
+            .catch(err => console.log("Error while uploading the file: ", err));
+    };
 
     useEffect(() => {
         const userId = localStorage.getItem('id');
@@ -27,6 +45,7 @@ function ProductCreate() {
 
        
         formData.owner = user;
+        formData.image = image
 
         
         api
@@ -56,7 +75,7 @@ function ProductCreate() {
                 </label>
                 <label>
                     Photo URL:
-                    <input type="text" name="photo" value={formData.photo} onChange={handleChange} />
+                    <input type="file"  onChange={(e)=>{handleFileUpload(e)}} />
                 </label>
                 <label>
                     Brand:
