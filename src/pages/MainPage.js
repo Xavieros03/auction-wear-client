@@ -34,8 +34,25 @@ function MainPage() {
         });
 
        
+        socket.on('productUpdated', (updatedProduct) => {
+          
+            setAuctions((prevAuctions) => {
+                return prevAuctions.map((auction) => {
+                    if (auction.product && auction.product._id === updatedProduct._id) {
+                       
+                        return {
+                            ...auction,
+                            product: updatedProduct,
+                        };
+                    }
+                    return auction;
+                });
+            });
+        });
+
         return () => {
             socket.off('auctionCreatedOrUpdated');
+            socket.off('productUpdated');
         };
     }, []);
 

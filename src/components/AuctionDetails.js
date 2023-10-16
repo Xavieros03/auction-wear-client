@@ -20,12 +20,22 @@ function AuctionDetails() {
                 const isScheduled = response.data.status === 'scheduled';
                 setIsJoinable(isScheduled);
                 setIsLoading(false);
+
+                
+                if (response.data.product) {
+                    socket.on(`productUpdated_${response.data.product._id}`, (updatedProduct) => {
+                        
+                        setAuction((prevAuction) => ({
+                            ...prevAuction,
+                            product: updatedProduct,
+                        }));
+                    });
+                }
             })
             .catch((error) => {
                 console.error('Error fetching auction details:', error);
                 setIsLoading(false);
             });
-
 
         socket.on('auctionUpdated', (updatedAuction) => {
             if (updatedAuction._id === id) {
@@ -52,12 +62,10 @@ function AuctionDetails() {
     };
 
     const placeBid = () => {
-
         if (auction.status !== 'active') {
             console.log('Auction is not active.');
             return;
         }
-
 
         const newBidAmount = parseFloat(bidAmount);
         if (isNaN(newBidAmount) || newBidAmount <= auction.currentBid) {
@@ -65,21 +73,17 @@ function AuctionDetails() {
             return;
         }
 
-
         const userId = localStorage.getItem('id');
         const newBid = {
             bidder: userId,
             amount: newBidAmount,
         };
 
-
         api
             .put(`/auctions/bid/${auction._id}`, newBid)
             .then((response) => {
-
                 const updatedAuction = response.data;
                 setAuction(updatedAuction);
-
                 console.log('Bid placed successfully:', response.data);
             })
             .catch((error) => {
@@ -100,6 +104,7 @@ function AuctionDetails() {
 
                     {auction.product && (
                         <div>
+                            <img src={auction.product.image} alt="" />
                             <p>Product Name: {auction.product.name}</p>
                             <p>Product Description: {auction.product.description}</p>
                             <p>Product Brand: {auction.product.brand}</p>

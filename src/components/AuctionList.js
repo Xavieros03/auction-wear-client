@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import api from "./api";
+import React, { useEffect, useState } from 'react';
+import api from './api';
 import io from 'socket.io-client';
 import { Link } from 'react-router-dom';
 
@@ -9,10 +9,27 @@ function AuctionList() {
     useEffect(() => {
         const socket = io.connect('http://localhost:5005');
 
-
         socket.on('auctionCreatedOrUpdated', (updatedAuction) => {
-
             setAuctions((prevAuctions) => [updatedAuction, ...prevAuctions]);
+
+            if (updatedAuction.product) {
+                const productId = updatedAuction.product._id;
+               
+                socket.on(`productUpdated_${productId}`, (updatedProduct) => {
+                    setAuctions((prevAuctions) => {
+                        const updatedAuctions = prevAuctions.map((prevAuction) => {
+                            if (prevAuction._id === updatedAuction._id) {
+                                return {
+                                    ...prevAuction,
+                                    product: updatedProduct,
+                                };
+                            }
+                            return prevAuction;
+                        });
+                        return updatedAuctions;
+                    });
+                });
+            }
         });
 
         api.get('/auctions/main', { timeout: 10000 })
@@ -22,7 +39,6 @@ function AuctionList() {
             .catch((error) => {
                 console.error('Error fetching auctions:', error);
             });
-
 
         return () => {
             socket.disconnect();
