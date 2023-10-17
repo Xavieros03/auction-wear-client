@@ -35,6 +35,13 @@ function CreateAuction() {
                 startingBid: parseFloat(startingBid),
                 scheduledStartTime: new Date(scheduledStartTime),
                 userId,
+                bids: [
+                    {
+                        bidder: userId,
+                        amount: parseFloat(startingBid),
+                        timestamp: new Date(), 
+                    },
+                ],
             })
             .then((response) => {
                 console.log('Auction created:', response.data);

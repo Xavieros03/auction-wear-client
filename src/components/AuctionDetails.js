@@ -21,10 +21,8 @@ function AuctionDetails() {
                 setIsJoinable(isScheduled);
                 setIsLoading(false);
 
-                
                 if (response.data.product) {
                     socket.on(`productUpdated_${response.data.product._id}`, (updatedProduct) => {
-                        
                         setAuction((prevAuction) => ({
                             ...prevAuction,
                             product: updatedProduct,
@@ -99,7 +97,7 @@ function AuctionDetails() {
                 <div>
                     <h2>Auction Details</h2>
                     <p>Starting Bid: {auction.startingBid}</p>
-                    <p>Participants: {auction.participants}</p>
+                    <p>Participants: {auction.participants.length}</p>
                     <p>Current Bid: {auction.currentBid}</p>
 
                     {auction.product && (
@@ -111,23 +109,29 @@ function AuctionDetails() {
                         </div>
                     )}
 
-                    {isJoinable ? (
-                        <div>
-                            <button onClick={joinAuction}>Join Auction</button>
-                        </div>
+                    {auction.status === 'completed' ? (
+                        <p>Winner: {auction.winner ? auction.winner.name : 'No winner'}</p>
                     ) : (
-                        <p>Auction has already started</p>
-                    )}
+                        <>
+                            {isJoinable ? (
+                                <div>
+                                    <button onClick={joinAuction}>Join Auction</button>
+                                </div>
+                            ) : (
+                                <p>Auction has already started</p>
+                            )}
 
-                    {auction.status === 'active' && (
-                        <div>
-                            <input
-                                type="number"
-                                value={bidAmount}
-                                onChange={(e) => setBidAmount(e.target.value)}
-                            />
-                            <button onClick={placeBid}>Place Bid</button>
-                        </div>
+                            {auction.status === 'active' && (
+                                <div>
+                                    <input
+                                        type="number"
+                                        value={bidAmount}
+                                        onChange={(e) => setBidAmount(e.target.value)}
+                                    />
+                                    <button onClick={placeBid}>Place Bid</button>
+                                </div>
+                            )}
+                        </>
                     )}
                 </div>
             ) : (
