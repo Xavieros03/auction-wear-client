@@ -9,10 +9,12 @@ const Logout = ({ onLogout }) => {
         localStorage.removeItem('id');
         onLogout();
     };
+    const navigate = Navigate()
 
 
     React.useEffect(() => {
         handleLogout();
+        navigate()
     }, []);
 
     return (
