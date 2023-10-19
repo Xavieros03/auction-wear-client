@@ -7,7 +7,7 @@ function AuctionList() {
     const [auctions, setAuctions] = useState([]);
 
     useEffect(() => {
-        const socket = io.connect('https://auction-server-project.onrender.com/api');
+        const socket = io.connect('wss://auction-server-project.onrender.com');
 
         socket.on('auctionCreatedOrUpdated', (updatedAuction) => {
             setAuctions((prevAuctions) => [updatedAuction, ...prevAuctions]);

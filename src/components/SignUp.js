@@ -13,11 +13,11 @@ function SignUp() {
         api.post('/auth/signup', formData)
             .then((response) => {
                 console.log(response.data);
-                
+
             })
             .catch((error) => {
                 console.error(error);
-                
+
             });
     };
 
