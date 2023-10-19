@@ -11,7 +11,7 @@ function AuctionDetails() {
     const [bidAmount, setBidAmount] = useState(0);
 
     useEffect(() => {
-        const socket = io.connect('http://localhost:5005');
+        const socket = io.connect('https://auction-server-project.onrender.com/api');
 
         api.get(`/auctions/${id}`)
             .then((response) => {

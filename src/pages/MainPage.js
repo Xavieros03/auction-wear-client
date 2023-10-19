@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import AuctionList from '../components/AuctionList';
 import io from 'socket.io-client'; 
 
-const socket = io(); 
+const socket = io.connect('https://auction-server-project.onrender.com/api'); 
 
 function MainPage() {
     const [authenticated, setAuthenticated] = useState(false);
