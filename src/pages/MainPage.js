@@ -64,6 +64,8 @@ function MainPage() {
                 <>
                     <p>This is the main page content for authenticated users.</p>
                     <Link to="/products/all">Products</Link>
+                    <br />
+                    <Link to="/auctions/create">Create Auction</Link>
                     <AuctionList auctions={auctions} />
                 </>
             ) : (

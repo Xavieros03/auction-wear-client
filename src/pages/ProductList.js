@@ -12,27 +12,27 @@ function ProductList() {
         const userToken = localStorage.getItem('token');
 
         if (userToken) {
-           
+
             api.defaults.headers.common['Authorization'] = `Bearer ${userToken}`
-        
-        api
-            .get('/products/all')
-            .then((response) => {
-                setProducts(response.data);
-                setLoading(false);
-            })
-            .catch((err) => {
-                console.error('Error fetching products:', err);
-                setError(err);
-                setLoading(false);
-            });
+
+            api
+                .get('/products/all')
+                .then((response) => {
+                    setProducts(response.data);
+                    setLoading(false);
+                })
+                .catch((err) => {
+                    console.error('Error fetching products:', err);
+                    setError(err);
+                    setLoading(false);
+                });
         }
     }, []);
 
     return (
         <div>
             <h2>Product List</h2>
-            <button><a href="/products/create">Create Product</a></button>
+            <button><Link to="/products/create">Create Product</Link></button>
             {loading ? (
                 <p>Loading products...</p>
             ) : error ? (
