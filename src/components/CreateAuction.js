@@ -47,7 +47,7 @@ function CreateAuction() {
                 console.log('Auction created:', response.data);
 
                 
-                const socket = io.connect('wss://auction-server-project.onrender.com'); 
+                const socket = io.connect('http://localhost:5005'); 
                 socket.emit('auctionCreatedOrUpdated', response.data);
 
 

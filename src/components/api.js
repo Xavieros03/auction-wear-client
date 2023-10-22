@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-    baseURL: 'https://auction-server-project.onrender.com/api',
+    baseURL: 'http://localhost:5005/api',
     timeout: 5000,
 });
 

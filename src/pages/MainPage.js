@@ -3,7 +3,7 @@ import AuctionList from '../components/AuctionList';
 import io from 'socket.io-client';
 import { Link, NavLink } from 'react-router-dom';
 
-const socket = io.connect('wss://auction-server-project.onrender.com');
+const socket = io.connect('http://localhost:5005');
 
 function MainPage() {
     const [authenticated, setAuthenticated] = useState(false);
