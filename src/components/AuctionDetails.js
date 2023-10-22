@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import api from "./api";
+import api from './api';
 import io from 'socket.io-client';
 
 function AuctionDetails() {
@@ -9,9 +9,11 @@ function AuctionDetails() {
     const [isJoinable, setIsJoinable] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [bidAmount, setBidAmount] = useState(0);
+    const [socket, setSocket] = useState(null); // Socket state
 
     useEffect(() => {
         const socket = io.connect('http://localhost:5005');
+        setSocket(socket);
 
         api.get(`/auctions/${id}`)
             .then((response) => {
@@ -20,25 +22,28 @@ function AuctionDetails() {
                 const isScheduled = response.data.status === 'scheduled';
                 setIsJoinable(isScheduled);
                 setIsLoading(false);
-
-                if (response.data.product) {
-                    socket.on(`productUpdated_${response.data.product._id}`, (updatedProduct) => {
-                        setAuction((prevAuction) => ({
-                            ...prevAuction,
-                            product: updatedProduct,
-                        }));
-                    });
-                }
             })
             .catch((error) => {
                 console.error('Error fetching auction details:', error);
                 setIsLoading(false);
             });
 
-        socket.on('auctionUpdated', (updatedAuction) => {
+        socket.on(`participantsUpdated_${id}`, (updatedParticipants) => {
+            setAuction((prevAuction) => ({
+                ...prevAuction,
+                participants: updatedParticipants,
+            }));
+        });
+
+        socket.on('auctionDetails', (updatedAuction) => {
             if (updatedAuction._id === id) {
                 setAuction(updatedAuction);
             }
+        });
+
+        socket.on('bidPlaced', (updatedAuction) => {
+            console.log('Bid placed event received:', updatedAuction);
+            setAuction(updatedAuction);
         });
 
         return () => {
@@ -49,10 +54,10 @@ function AuctionDetails() {
     const joinAuction = () => {
         const userId = localStorage.getItem('id');
 
-        api
-            .put(`/auctions/join/${auction._id}`, { userId })
+        api.put(`/auctions/join/${auction._id}`, { userId })
             .then((response) => {
                 console.log('Joined the auction:', response.data);
+
             })
             .catch((error) => {
                 console.error('Error joining the auction:', error);
@@ -77,8 +82,7 @@ function AuctionDetails() {
             amount: newBidAmount,
         };
 
-        api
-            .put(`/auctions/bid/${auction._id}`, newBid)
+        api.put(`/auctions/bid/${auction._id}`, newBid)
             .then((response) => {
                 const updatedAuction = response.data;
                 setAuction(updatedAuction);
@@ -87,6 +91,7 @@ function AuctionDetails() {
             .catch((error) => {
                 console.error('Error placing bid:', error);
             });
+
     };
 
     return (
