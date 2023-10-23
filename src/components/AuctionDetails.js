@@ -9,7 +9,7 @@ function AuctionDetails() {
     const [isJoinable, setIsJoinable] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [bidAmount, setBidAmount] = useState(0);
-    const [socket, setSocket] = useState(null); // Socket state
+    const [socket, setSocket] = useState(null); 
 
     useEffect(() => {
         const socket = io.connect('http://localhost:5005');
@@ -44,6 +44,11 @@ function AuctionDetails() {
         socket.on('bidPlaced', (updatedAuction) => {
             console.log('Bid placed event received:', updatedAuction);
             setAuction(updatedAuction);
+        });
+        socket.on('auctionWinner', (auction) => {
+            if (auction._id === id) {
+                setAuction(auction);
+            }
         });
 
         return () => {
@@ -95,49 +100,74 @@ function AuctionDetails() {
     };
 
     return (
-        <div>
+        <div className="h-screen flex bg-darkgray text-white p-4 items-center">
             {isLoading ? (
                 <p>Loading auction details...</p>
             ) : auction ? (
-                <div>
-                    <h2>Auction Details</h2>
-                    <p>Starting Bid: {auction.startingBid}</p>
-                    <p>Participants: {auction.participants.length}</p>
-                    <p>Current Bid: {auction.currentBid}</p>
-
-                    {auction.product && (
-                        <div>
-                            <img src={auction.product.image} alt="" />
-                            <p>Product Name: {auction.product.name}</p>
-                            <p>Product Description: {auction.product.description}</p>
-                            <p>Product Brand: {auction.product.brand}</p>
+                <div className="w-full text-2xl flex space-x-4">
+                    <div className="w-1/2">
+                        {auction.product && (
+                            <div className="h-150 w-200">
+                                <img
+                                    src={auction.product.image}
+                                    alt=""
+                                    className="w-full h-100 object-cover"
+                                />
+                            </div>
+                        )}
+                    </div>
+                    <div className="w-1/2">
+                        <div className="mb-8">
+                            <h2 className="text-3xl mb-8 font-semibold text-gold">Auction Details</h2>
+                            {auction.product && (
+                                <>
+                                    <p className="text-1xl mb-6 font-semibold">{auction.product.name}</p>
+                                    <p className="text-lg mb-6">Description: {auction.product.description}</p>
+                                    <p className="text-lg mb-6">Brand: {auction.product.brand}</p>
+                                </>
+            )}
                         </div>
-                    )}
+                        <hr className="my-8" /> 
+                        <div>
+                            <h2 className="text-3xl mb-8 font-semibold text-orange">Auction Status</h2>
+                            <p className="text-lg mb-6">Participants: {auction.participants.length}</p>
+                            <p className="text-lg mb-6">Starting Bid: {auction.startingBid}$</p>
+                            <p className="text-lg mb-6">Current Bid: {auction.currentBid}$</p>
 
-                    {auction.status === 'completed' ? (
-                        <p>Winner: {auction.winner ? auction.winner.name : 'No winner'}</p>
-                    ) : (
-                        <>
-                            {isJoinable ? (
-                                <div>
-                                    <button onClick={joinAuction}>Join Auction</button>
-                                </div>
+                            {auction.status === 'completed' ? (
+                                <p className="text-lg mb-6">Winner: {auction.winner ? auction.winner.name : 'No winner'}</p>
                             ) : (
-                                <p>Auction has already started</p>
-                            )}
+                                <>
+                                    {isJoinable ? (
+                                        <div>
+                                            <button className="bg-orange hover:bg-gold text-black font-bold py-2 px-4 rounded mb-2" onClick={joinAuction}>
+                                                Join Auction
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <p className="text-lg mb-2">Auction has already started</p>
+                                    )}
 
-                            {auction.status === 'active' && (
-                                <div>
-                                    <input
-                                        type="number"
-                                        value={bidAmount}
-                                        onChange={(e) => setBidAmount(e.target.value)}
-                                    />
-                                    <button onClick={placeBid}>Place Bid</button>
-                                </div>
+                                    {auction.status === 'active' && (
+                                        <div>
+                                            <input
+                                                type="number"
+                                                className="p-2 rounded text-black"
+                                                value={bidAmount}
+                                                onChange={(e) => setBidAmount(e.target.value)}
+                                            />
+                                            <button
+                                                className="bg-orange hover:bg-gold text-black font-bold py-2 px-4 rounded"
+                                                onClick={placeBid}
+                                            >
+                                                Place Bid
+                                            </button>
+                                        </div>
+                                    )}
+                                </>
                             )}
-                        </>
-                    )}
+                        </div>
+                    </div>
                 </div>
             ) : (
                 <p>No auction found.</p>

@@ -14,18 +14,15 @@ function ProductCreate() {
     const [user, setUser] = useState(null);
 
     const handleFileUpload = (e) => {
-        // console.log("The file to be uploaded is: ", e.target.files[0]);
+       
 
         const uploadData = new FormData();
 
-        // imageUrl => this name has to be the same as in the model since we pass
-        // req.body to .create() method when creating a new movie in '/api/movies' POST route
+       
         uploadData.append("image", e.target.files[0]);
 
         api.post('/products/upload', uploadData)
             .then(response => {
-                // console.log("response is: ", response);
-                // response carries "fileUrl" which we can use to update the state
                 setImage(response.data.fileUrl);
             })
             .catch(err => console.log("Error while uploading the file: ", err));
@@ -62,26 +59,64 @@ function ProductCreate() {
     };
 
     return (
-        <div>
-            <h2>Create a New Product</h2>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Name:
-                    <input type="text" name="name" value={formData.name} onChange={handleChange} />
-                </label>
-                <label>
-                    Description:
-                    <textarea name="description" value={formData.description} onChange={handleChange} />
-                </label>
-                <label>
-                    Photo URL:
-                    <input type="file"  onChange={(e)=>{handleFileUpload(e)}} />
-                </label>
-                <label>
-                    Brand:
-                    <input type="text" name="brand" value={formData.brand} onChange={handleChange} />
-                </label>
-                <button type="submit">Create Product</button>
+        <div className="h-screen flex flex-col justify-center items-center bg-darkgray text-white">
+            <h2 className="text-3xl font-semibold mb-4">Create a New Product</h2>
+            <form onSubmit={handleSubmit} className="space-y-4 text-white">
+                <div className="mb-4">
+                    <label htmlFor="name" className="block mb-2">
+                        Name:
+                    </label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        className="w-full p-2 rounded text-black"
+                    />
+                </div>
+                <div className="mb-4">
+                    <label htmlFor="description" className="block mb-2">
+                        Description:
+                    </label>
+                    <textarea
+                        id="description"
+                        name="description"
+                        value={formData.description}
+                        onChange={handleChange}
+                        className="w-full p-2 rounded text-black"
+                    />
+                </div>
+                <div className="mb-4">
+                    <label htmlFor="image" className="block mb-2">
+                        Photo URL:
+                    </label>
+                    <input
+                        type="file"
+                        id="image"
+                        onChange={(e) => handleFileUpload(e)}
+                        className="w-full p-2 rounded text-black"
+                    />
+                </div>
+                <div className="mb-4">
+                    <label htmlFor="brand" className="block mb-2">
+                        Brand:
+                    </label>
+                    <input
+                        type="text"
+                        id="brand"
+                        name="brand"
+                        value={formData.brand}
+                        onChange={handleChange}
+                        className="w-full p-2 rounded text-black"
+                    />
+                </div>
+                <button
+                    type="submit"
+                    className="bg-orange hover:bg-gold text-black font-bold py-2 px-4 rounded"
+                >
+                    Create Product
+                </button>
             </form>
         </div>
     );

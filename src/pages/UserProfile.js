@@ -43,26 +43,36 @@ useEffect(() => {
     }, []);
 
     return (
-        <div>
-            <h2>User Profile</h2>
+        <div className="h-screen flex flex-col justify-center items-center bg-darkgray text-gold">
+            <h2 className="text-3xl font-semibold mb-4">User Profile</h2>
             {loading ? (
                 <p>Loading user information...</p>
             ) : user ? (
-                <div>
-                    <p>Name: {user.name}</p>
-                    <p>Email: {user.email}</p>
-                    <p>Street: {user.address.street}</p>
-                    <p>City: {user.address.city}</p>
-                    <p>State: {user.address.state}</p>
-                    <p>Postal Code: {user.address.postalCode}</p>
-                    <p>Country: {user.address.country}</p>
-                        <Link to="/user/update">Update Profile</Link>
-                        <Link to="/user/delete">Delete Profile</Link>
+                <div className="text-xl">
+                    <p><span className="font-semibold">Name:</span> {user.name}</p>
+                    <p><span className="font-semibold">Email:</span> {user.email}</p>
+                    <p><span className="font-semibold">Street:</span> {user.address.street}</p>
+                    <p><span className="font-semibold">City:</span> {user.address.city}</p>
+                    <p><span className="font-semibold">State:</span> {user.address.state}</p>
+                    <p><span className="font-semibold">Postal Code:</span> {user.address.postalCode}</p>
+                    <p><span className="font-semibold">Country:</span> {user.address.country}</p>
+                    <div className="mt-4 space-x-4">
+                        <Link to="/user/update">
+                            <button className="bg-orange hover:bg-gold text-black font-bold py-2 px-4 rounded">
+                                Update Profile
+                            </button>
+                        </Link>
+                        <Link to="/user/delete">
+                            <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                Delete Profile
+                            </button>
+                        </Link>
+                    </div>
                 </div>
             ) : (
-                <p>Unable to fetch user information.</p>
+                <p className="text-2xl">Unable to fetch user information.</p>
             )}
-            {error && <p>Error: {error.message}</p>}
+            {error && <p className="text-red-500">Error: {error.message}</p>}
         </div>
     );
 }

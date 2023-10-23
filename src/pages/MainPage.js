@@ -58,16 +58,24 @@ function MainPage() {
     }, []);
 
     return (
-        <div>
-            <h2>Welcome to the Main Page</h2>
+        <div className="bg-darkgray text-gold p-4">
+            <h2 className="text-4xl font-semibold mb-4">All Auctions:</h2>
             {authenticated ? (
-                <>
-                    <p>This is the main page content for authenticated users.</p>
-                    <Link to="/products/all">Products</Link>
-                    <br />
-                    <Link to="/auctions/create">Create Auction</Link>
+                <div className="space-y-4">
+                    <div className="flex items-center space-x-2">
+                        <Link to="/products/all">
+                            <button className="bg-orange hover:bg-gold text-black font-bold py-2 px-4 rounded">
+                                Products
+                            </button>
+                        </Link>
+                        <Link to="/auctions/create">
+                            <button className="bg-orange hover:bg-gold text-black font-bold py-2 px-4 rounded">
+                                Create Auction
+                            </button>
+                        </Link>
+                    </div>
                     <AuctionList auctions={auctions} />
-                </>
+                </div>
             ) : (
                 <p>You need to log in to access this content.</p>
             )}

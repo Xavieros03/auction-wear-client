@@ -30,24 +30,35 @@ function ProductList() {
     }, []);
 
     return (
-        <div>
-            <h2>Product List</h2>
-            <button><Link to="/products/create">Create Product</Link></button>
+        <div className="h-screen flex flex-col justify-center items-center bg-darkgray text-gold">
+            <h2 className="text-3xl font-semibold mb-4">Product List</h2>
+            <button className="bg-orange hover:bg-gold text-black font-bold py-2 px-4 rounded">
+                <Link to="/products/create">Create Product</Link>
+            </button>
             {loading ? (
-                <p>Loading products...</p>
+                <p className="text-white">Loading products...</p>
             ) : error ? (
-                <p>Error: {error.message}</p>
+                <p className="text-red-500">Error: {error.message}</p>
             ) : (
-                <ul>
+                <ul className="text-white grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
                     {products.map((product) => (
-                        <li key={product._id}>
-                            <h3>{product.name}</h3>
-                            <img src={product.image} alt="" />
-                            <p>Description: {product.description}</p>
-                            <p>Brand: {product.brand}</p>
-                            <Link to={`/products/update/${product._id}`}>Update</Link>
-                            <br />
-                            <Link to={`/products/delete/${product._id}`}>Delete</Link>
+                        <li key={product._id} className="my-4">
+                            <img src={product.image} alt={product.name} className="w-48 h-48 object-cover my-2" />
+                            <h3 className="text-2xl font-semibold mb-2">{product.name}</h3>
+                            <div className="flex space-x-4">
+                                <Link
+                                    to={`/products/update/${product._id}`}
+                                    className="bg-orange hover:bg-gold text-black font-bold py-2 px-4 rounded"
+                                >
+                                    Update
+                                </Link>
+                                <Link
+                                    to={`/products/delete/${product._id}`}
+                                    className="bg-orange hover:bg-gold text-black font-bold py-2 px-4 rounded"
+                                >
+                                    Delete
+                                </Link>
+                            </div>
                         </li>
                     ))}
                 </ul>

@@ -53,12 +53,29 @@ function Login() {
     };
 
     return (
-        <div>
-            <h2>Login</h2>
-            <form onSubmit={handleSubmit}>
-                <input type="email" name="email" placeholder="Email" onChange={handleChange} />
-                <input type="password" name="password" placeholder="Password" onChange={handleChange} />
-                <button type="submit">Login</button>
+        <div className="h-screen flex flex-col justify-center items-center bg-darkgray text-gold">
+            <h2 className="text-4xl font-semibold mb-4">Login</h2>
+            <form onSubmit={handleSubmit} className="space-y-4">
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    onChange={handleChange}
+                    className="w-full p-2 border-b-2 border-gold focus:outline-none"
+                />
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    onChange={handleChange}
+                    className="w-full p-2 border-b-2 border-gold text-black focus:outline-none"
+                />
+                <button
+                    type="submit"
+                    className="bg-orange hover:bg-gold text-black font-bold py-2 px-4 rounded"
+                >
+                    Login
+                </button>
             </form>
         </div>
     );

@@ -20,6 +20,9 @@ import AuctionList from './components/AuctionList';
 import AuctionDetails from "./components/AuctionDetails"
 
 
+
+
+
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
   const navigate = useNavigate();

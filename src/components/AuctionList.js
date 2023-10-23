@@ -46,24 +46,29 @@ function AuctionList() {
     }, []);
 
     return (
-        <div>
-            <h3>Auction List</h3>
-            <ul>
-                {auctions.map((auction) => (
-                    <li key={auction._id}>
-                        {auction.product ? (
-                            <div>
-                                <p>Product Name: {auction.product.name}</p>
-                                <p>Product Description: {auction.product.description}</p>
-                                <p>Product Brand: {auction.product.brand}</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {auctions.map((auction) => (
+                <div key={auction._id} className="bg-white border rounded shadow-md p-4">
+                    {auction.product ? (
+                        <div>
+                            <img src={auction.product.image} alt={auction.product.name} className="w-full h-48 object-cover mb-2" />
+                            <div className="text-black flex items-center justify-between">
+                                <h3 className="text-lg font-semibold mb-2">{auction.product.name}</h3>
+                                <h3 className="text-lg font-semibold mb-2">{auction.startingBid}$</h3>
                             </div>
-                        ) : (
-                            <p>No product information available</p>
-                        )}
-                        <Link to={`/auctions/${auction._id}`}>Details</Link>
-                    </li>
-                ))}
-            </ul>
+                        </div>
+                    ) : (
+                        <p className="text-gray-600">No product information available</p>
+                    )}
+                    <Link to={`/auctions/${auction._id}`}>
+                        <div className="flex justify-center mt-4">
+                            <button className="bg-orange hover:bg-gold text-white font-bold py-2 px-4 rounded">
+                                Details
+                            </button>
+                        </div>
+                    </Link>
+                </div>
+            ))}
         </div>
     );
 }

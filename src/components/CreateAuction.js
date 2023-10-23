@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../components/api';
 import io from 'socket.io-client'; 
 
 function CreateAuction() {
+    const navigate = useNavigate()
     const [authenticated, setAuthenticated] = useState(false);
     const [userProducts, setUserProducts] = useState([]);
     const [productId, setProductId] = useState('');
@@ -45,6 +47,7 @@ function CreateAuction() {
             })
             .then((response) => {
                 console.log('Auction created:', response.data);
+                navigate('/main')
 
                 
                 const socket = io.connect('http://localhost:5005'); 
@@ -59,16 +62,15 @@ function CreateAuction() {
     };
 
     return (
-        <div>
-            <h2>Welcome to the Main Page</h2>
+        <div className="h-screen flex flex-col justify-center items-center bg-darkgray text-gold">
+            <h2 className="text-3xl font-semibold mb-4">Create Auction</h2>
             {authenticated ? (
-                <>
-                    <p>This is the main page content for authenticated users.</p>
-                    <div>
-                        <h3>Create Auction</h3>
-                        <label>
+                <div className="text-white space-y-4">
+                    <div className="mb-2">
+                        <label className="block">
                             Select a Product:
                             <select
+                                className="w-full p-2 rounded bg-darkgray border border-gray-400 text-white"
                                 value={productId}
                                 onChange={(e) => setProductId(e.target.value)}
                             >
@@ -80,27 +82,38 @@ function CreateAuction() {
                                 ))}
                             </select>
                         </label>
-                        <label>
+                    </div>
+                    <div className="mb-2">
+                        <label className="block">
                             Starting Bid:
                             <input
                                 type="text"
+                                className="w-full p-2 rounded bg-darkgray border border-gray-400 text-white"
                                 value={startingBid}
                                 onChange={(e) => setStartingBid(e.target.value)}
                             />
                         </label>
-                        <label>
+                    </div>
+                    <div className="mb-2">
+                        <label className="block">
                             Scheduled Start Time:
                             <input
                                 type="datetime-local"
+                                className="w-full p-2 rounded bg-darkgray border border-gray-400 text-white"
                                 value={scheduledStartTime}
                                 onChange={(e) => setScheduledStartTime(e.target.value)}
                             />
                         </label>
-                        <button onClick={handleCreateAuction}>Create Auction</button>
                     </div>
-                </>
+                    <button
+                        className="w-full bg-orange hover-bg-gold text-black font-bold py-2 px-4 rounded"
+                        onClick={handleCreateAuction}
+                    >
+                        Create Auction
+                    </button>
+                </div>
             ) : (
-                <p>You need to log in to access this content.</p>
+                <p className="text-white">You need to log in to access this content.</p>
             )}
         </div>
     );

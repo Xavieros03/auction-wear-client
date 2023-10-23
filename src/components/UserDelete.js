@@ -30,11 +30,20 @@ function UserDelete() {
     };
 
     return (
-        <div>
-            <h2>Delete User</h2>
-            <p>Are you sure you want to delete your account? This action cannot be undone.</p>
-            {deleteError && <p>{deleteError}</p>}
-            <button onClick={handleDelete} disabled={isDeleting}>
+        <div className="h-screen flex flex-col justify-center items-center bg-darkgray text-gold">
+            <h2 className="text-3xl font-semibold mb-4">Delete User</h2>
+            <p className=" text-2xl text-white font-semibold mb-4">
+                Are you sure you want to delete your account? This action cannot be undone.
+            </p>
+            {deleteError && <p className="text-red-500">{deleteError}</p>}
+            <button
+                onClick={handleDelete}
+                disabled={isDeleting}
+                className={`${isDeleting
+                        ? 'bg-orange opacity-50 cursor-not-allowed'
+                        : 'bg-orange hover:bg-gold text-black font-bold py-2 px-4 rounded'
+                    }`}
+            >
                 {isDeleting ? 'Deleting...' : 'Delete Account'}
             </button>
         </div>
