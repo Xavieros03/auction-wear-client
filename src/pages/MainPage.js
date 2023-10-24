@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AuctionList from '../components/AuctionList';
 import io from 'socket.io-client';
-import { Link, NavLink } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 
 const socket = io.connect('http://localhost:5005');
 

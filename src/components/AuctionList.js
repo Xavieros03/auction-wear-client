@@ -9,27 +9,11 @@ function AuctionList() {
     useEffect(() => {
         const socket = io.connect('http://localhost:5005');
 
-        socket.on('auctionCreatedOrUpdated', (updatedAuction) => {
-            setAuctions((prevAuctions) => [updatedAuction, ...prevAuctions]);
-
-            if (updatedAuction.product) {
-                const productId = updatedAuction.product._id;
-               
-                socket.on(`productUpdated_${productId}`, (updatedProduct) => {
-                    setAuctions((prevAuctions) => {
-                        const updatedAuctions = prevAuctions.map((prevAuction) => {
-                            if (prevAuction._id === updatedAuction._id) {
-                                return {
-                                    ...prevAuction,
-                                    product: updatedProduct,
-                                };
-                            }
-                            return prevAuction;
-                        });
-                        return updatedAuctions;
-                    });
-                });
-            }
+        socket.on('auctionCreatedOrUpdated', (responseData) => {
+            
+            console.log('Received updated data:', responseData);
+            setAuctions((prevAuctions) => [responseData, ...prevAuctions]);
+            window.location.reload();
         });
 
         api.get('/auctions/main', { timeout: 10000 })

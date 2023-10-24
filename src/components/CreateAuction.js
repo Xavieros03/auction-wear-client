@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../components/api';
-import io from 'socket.io-client'; 
 
 function CreateAuction() {
     const navigate = useNavigate()
@@ -48,13 +47,7 @@ function CreateAuction() {
             .then((response) => {
                 console.log('Auction created:', response.data);
                 navigate('/main')
-
-                
-                const socket = io.connect('http://localhost:5005'); 
-                socket.emit('auctionCreatedOrUpdated', response.data);
-
-
-                socket.disconnect();
+                window.location.reload();
             })
             .catch((error) => {
                 console.error('Error creating auction:', error);
