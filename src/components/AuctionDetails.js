@@ -11,7 +11,7 @@ function AuctionDetails() {
     const [isLoading, setIsLoading] = useState(true);
     const [bidAmount, setBidAmount] = useState(0);
     const [socket, setSocket] = useState(null);
-    const [countdown, setCountdown] = useState(null); 
+    const [countdown, setCountdown] = useState(null);
 
     useEffect(() => {
         const socket = io.connect('http://localhost:5005');
@@ -52,6 +52,9 @@ function AuctionDetails() {
             if (auction._id === id) {
                 setAuction(auction);
             }
+            if (auction.status === 'completed') {
+                window.location.reload();
+            }
         });
 
         return () => {
@@ -59,7 +62,7 @@ function AuctionDetails() {
         };
     }, [id]);
 
-    // Calculate the countdown timer
+   
     useEffect(() => {
         if (!auction || auction.status !== 'scheduled') return;
 
@@ -155,12 +158,12 @@ function AuctionDetails() {
                         <hr className="my-8" />
                         <div>
                             <h2 className="text-3xl mb-8 font-semibold text-orange">Auction Status</h2>
-                                {countdown !== null && auction.status === 'scheduled' ? (
-                                    <div>
-                                <p className="text-lg mb-6">Auction starts in {Math.floor(countdown / 1000)} seconds</p>
-                                        <p className="text-lg mb-6">Participants: {auction.participants.length}</p>
-                                        <p className="text-lg mb-6">Starting Bid: {auction.startingBid}$</p>
-                                        <p className="text-lg mb-6">Current Bid: {auction.currentBid}$</p>
+                            {countdown !== null && auction.status === 'scheduled' ? (
+                                <div>
+                                    <p className="text-lg mb-6">Auction starts in {Math.floor(countdown / 1000)} seconds</p>
+                                    <p className="text-lg mb-6">Participants: {auction.participants.length}</p>
+                                    <p className="text-lg mb-6">Starting Bid: {auction.startingBid}$</p>
+                                    <p className="text-lg mb-6">Current Bid: {auction.currentBid}$</p>
                                 </div>
                             ) : (
                                 <>
