@@ -26,17 +26,27 @@ function ProductDelete() {
     };
 
     return (
-        <div>
-            <h2>Delete Product</h2>
+        <div className="h-screen flex flex-col justify-center items-center bg-darkgray text-gold">
+            <h2 className="text-3xl font-semibold mb-4">Delete Product</h2>
             {loading ? (
-                <p>Deleting product...</p>
+                <p className="text-white text-2xl mb-4">Deleting product...</p>
             ) : error ? (
-                <p>Error: {error.message}</p>
+                <p className="text-red-500 text-2xl mb-4">Error: {error.message}</p>
             ) : (
                 <div>
-                    <p>Are you sure you want to delete this product?</p>
-                    <button onClick={handleDelete}>Delete</button>
-                    <button onClick={() => navigate('/products')}>Cancel</button>
+                    <p className="text-white text-2xl mb-4">
+                        Are you sure you want to delete this product?
+                    </p>
+                    <button
+                        onClick={handleDelete}
+                        disabled={loading}
+                        className={`${loading
+                                ? 'bg-orange opacity-50 cursor-not-allowed'
+                                : 'bg-orange hover:bg-gold text-black font-bold py-2 px-4 rounded'
+                            }`}
+                    >
+                        {loading ? 'Deleting...' : 'Delete'}
+                    </button>
                 </div>
             )}
         </div>
