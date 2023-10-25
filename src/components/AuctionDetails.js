@@ -14,7 +14,7 @@ function AuctionDetails() {
     const [countdown, setCountdown] = useState(null);
 
     useEffect(() => {
-        const socket = io.connect('http://localhost:5005');
+        const socket = io.connect('wss://auction-server-project.onrender.com');
         setSocket(socket);
 
         api.get(`/auctions/${id}`)
