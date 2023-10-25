@@ -28,11 +28,6 @@ function ProductDelete() {
     return (
         <div className="h-screen flex flex-col justify-center items-center bg-darkgray text-gold">
             <h2 className="text-3xl font-semibold mb-4">Delete Product</h2>
-            {loading ? (
-                <p className="text-white text-2xl mb-4">Deleting product...</p>
-            ) : error ? (
-                <p className="text-red-500 text-2xl mb-4">Error: {error.message}</p>
-            ) : (
                 <div>
                     <p className="text-white text-2xl mb-4">
                         Are you sure you want to delete this product?
@@ -48,7 +43,6 @@ function ProductDelete() {
                         {loading ? 'Deleting...' : 'Delete'}
                     </button>
                 </div>
-            )}
         </div>
     );
 }
