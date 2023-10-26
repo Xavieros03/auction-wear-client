@@ -17,9 +17,8 @@ useEffect(() => {
 
     if (!id) {
         
-        setError(new Error('User not logged in'));
-        setLoading(false);
         navigate("/login")
+        
         return;
     }
     
