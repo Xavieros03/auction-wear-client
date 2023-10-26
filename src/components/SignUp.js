@@ -49,15 +49,15 @@ function SignUp() {
                     className="w-full p-2 rounded text-black"
                 />
                 <div className="flex justify-between items-center">
-                    <Link to="/" className="text-blue-400 text-sm">
-                        Back
-                    </Link>
                     <button
                         type="submit"
                         className="w-2/3 md:w-1/2 bg-orange hover:bg-gold text-black font-bold py-2 px-4 rounded"
                     >
                         Sign Up
                     </button>
+                    <Link to="/" className="text-blue-400 text-sm">
+                        Back
+                    </Link>
                 </div>
                 <small className="text-gray-400 text-sm">
                     *Password must contain at least one number, one lower case, and one upper case letter
