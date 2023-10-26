@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import api from "../components/api"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 
 
@@ -8,6 +8,7 @@ function UserProfile() {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const navigate = useNavigate()
 
     
 
@@ -16,8 +17,9 @@ useEffect(() => {
 
     if (!id) {
         
-        setError(new Error('User ID not found in localStorage.'));
+        setError(new Error('User not logged in'));
         setLoading(false);
+        navigate("/login")
         return;
     }
     
