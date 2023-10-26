@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 function ProductCreate() {
     const navigate = useNavigate()
+    const [authenticated, setAuthenticated] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
         description: '',
@@ -43,7 +44,9 @@ function ProductCreate() {
        
         formData.owner = user;
         formData.image = image
-
+        const userToken = localStorage.getItem('token');
+        if (userToken) {
+            setAuthenticated(true);
         
         api
             .post('/products/create', formData)
@@ -56,11 +59,13 @@ function ProductCreate() {
                 console.error('Error creating product:', error);
                 
             });
+        }
     };
 
     return (
         <div className="h-screen flex flex-col justify-center items-center bg-darkgray text-white">
             <h2 className="text-3xl font-semibold mb-4">Create a New Product</h2>
+            {authenticated ? (
             <form onSubmit={handleSubmit} className="space-y-4 text-white">
                 <div className="mb-4">
                     <label htmlFor="name" className="block mb-2">
@@ -118,6 +123,9 @@ function ProductCreate() {
                     Create Product
                 </button>
             </form>
+            ) : (
+                    <p className="text-white">You need to log in to access this content.</p>
+            )}
         </div>
     );
 }
