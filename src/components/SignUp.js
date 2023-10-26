@@ -42,7 +42,7 @@ function SignUp() {
                     className="w-full p-2 rounded text-black"
                 />
                 <input
-                    type="text"
+                    type="password"
                     name="password"
                     placeholder="Password"
                     onChange={handleChange}
@@ -60,7 +60,7 @@ function SignUp() {
                     </Link>
                 </div>
                 <small className="text-gray-400 text-sm">
-                    *Password must be 8 characters long and contain at least one number, one lower case, and one upper case letter
+                    *Password must be atleast 8 characters long and contain at least one number, one lower case, and one upper case letter
                 </small>
             </form>
         </div>
