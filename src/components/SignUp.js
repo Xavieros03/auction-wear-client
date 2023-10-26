@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import api from './api'
 
 function SignUp() {
@@ -23,7 +23,6 @@ function SignUp() {
 
             });
     };
-
     return (
         <div className="bg-darkgray text-white min-h-screen flex flex-col justify-center items-center">
             <h2 className="text-4xl font-semibold mb-4">Sign Up</h2>
@@ -49,12 +48,20 @@ function SignUp() {
                     onChange={handleChange}
                     className="w-full p-2 rounded text-black"
                 />
-                <button
-                    type="submit"
-                    className="w-full bg-orange hover:bg-gold text-black font-bold py-2 px-4 rounded"
-                >
-                    Sign Up
-                </button>
+                <div className="flex justify-between items-center">
+                    <Link to="/" className="text-blue-400 text-sm">
+                        Back
+                    </Link>
+                    <button
+                        type="submit"
+                        className="w-2/3 md:w-1/2 bg-orange hover:bg-gold text-black font-bold py-2 px-4 rounded"
+                    >
+                        Sign Up
+                    </button>
+                </div>
+                <small className="text-gray-400 text-sm">
+                    *Password must contain at least one number, one lower case, and one upper case letter
+                </small>
             </form>
         </div>
     );
