@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import api from './api'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 
 
@@ -27,10 +27,10 @@ function Login() {
             .then((response) => {
                 const authToken = response.data.authToken;
                 console.log('Received authToken:', authToken);
-                const id = response.data.user._id; 
+                const id = response.data.user._id;
                 console.log('Received user ID:', id);
 
-                
+
                 api.get(`/user/profile/${id}`, {
                     headers: {
                         Authorization: `Bearer ${authToken}`,
@@ -38,7 +38,7 @@ function Login() {
                 })
                     .then((userResponse) => {
                         console.log('Received user data:', userResponse.data);
-                        
+
                         localStorage.setItem('token', authToken);
                         localStorage.setItem('id', id);
                         handleUserLogin(authToken, id);
@@ -70,12 +70,17 @@ function Login() {
                     onChange={handleChange}
                     className="w-full p-2 border-b-2 border-gold text-black focus:outline-none"
                 />
-                <button
-                    type="submit"
-                    className="bg-orange hover:bg-gold text-black font-bold py-2 px-4 rounded"
-                >
-                    Login
-                </button>
+                <div className="flex justify-between items-center">
+                    <button
+                        type="submit"
+                        className="w-2/3 md:w-1/2 bg-orange hover:bg-gold text-black font-bold py-2 px-4 rounded"
+                    >
+                        Login
+                    </button>
+                    <Link to="/" className="text-blue-400 text-sm">
+                        Back
+                    </Link>
+                </div>
             </form>
         </div>
     );

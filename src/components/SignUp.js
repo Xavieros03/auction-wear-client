@@ -60,7 +60,7 @@ function SignUp() {
                     </Link>
                 </div>
                 <small className="text-gray-400 text-sm">
-                    *Password must contain at least one number, one lower case, and one upper case letter
+                    *Password must be 8 characters long and contain at least one number, one lower case, and one upper case letter
                 </small>
             </form>
         </div>
