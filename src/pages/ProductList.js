@@ -30,10 +30,13 @@ function ProductList() {
         <div className="h-screen flex flex-col justify-center items-center bg-darkgray text-gold">
             <h2 className="text-3xl font-semibold mb-4">Product List</h2>
             {authenticated ? (
+                <>
                 <div>
                     <button className="bg-orange hover:bg-gold text-black font-bold py-2 px-4 rounded">
                         <Link to="/products/create">Create Product</Link>
                     </button>
+                </div>
+                <div>
 
                     <ul className="text-white grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
                         {products.map((product) => (
@@ -58,6 +61,7 @@ function ProductList() {
                         ))}
                     </ul>
                 </div>
+                </>
 
             ) : (
                 <p className="text-white">You need to log in to access this content.</p>
