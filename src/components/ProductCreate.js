@@ -32,6 +32,10 @@ function ProductCreate() {
     useEffect(() => {
         const userId = localStorage.getItem('id');
         setUser(userId);
+        const userToken = localStorage.getItem('token');
+        if (userToken) {
+            setAuthenticated(true);
+        }
     }, []);
 
     const handleChange = (e) => {
@@ -44,9 +48,6 @@ function ProductCreate() {
        
         formData.owner = user;
         formData.image = image
-        const userToken = localStorage.getItem('token');
-        if (userToken) {
-            setAuthenticated(true);
         
         api
             .post('/products/create', formData)
@@ -59,7 +60,6 @@ function ProductCreate() {
                 console.error('Error creating product:', error);
                 
             });
-        }
     };
 
     return (

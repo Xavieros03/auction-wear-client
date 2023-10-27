@@ -5,8 +5,6 @@ import { Link } from 'react-router-dom';
 
 function ProductList() {
     const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
     const [authenticated, setAuthenticated] = useState(false);
 
     useEffect(() => {
@@ -18,12 +16,12 @@ function ProductList() {
                 .get('/products/all')
                 .then((response) => {
                     setProducts(response.data);
-                    setLoading(false);
+                    
                 })
                 .catch((err) => {
                     console.error('Error fetching products:', err);
-                    setError(err);
-                    setLoading(false);
+                    
+                    
                 });
         }
     }, []);
